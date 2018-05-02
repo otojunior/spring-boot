@@ -18,7 +18,6 @@ package sample.batch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * 
@@ -32,13 +31,6 @@ public class SampleBatchApplication {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/*
-		 * System.exit is common for Batch applications 
-		 * since the exit code can be used to 
-		 * drive a workflow.
-		 */
-		ConfigurableApplicationContext context = SpringApplication.run(SampleBatchApplication.class, args);
-		int exitcode = SpringApplication.exit(context);
-		System.exit(exitcode);
+		SpringApplication.run(SampleBatchApplication.class, args);
 	}
 }
