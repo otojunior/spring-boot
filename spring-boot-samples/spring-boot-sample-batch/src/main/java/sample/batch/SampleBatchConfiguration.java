@@ -32,15 +32,13 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 @Configuration
 @EnableBatchProcessing
 public class SampleBatchConfiguration extends DefaultBatchConfigurer {
-	@Autowired public JobRegistry jobRegistry;
-	@Autowired public JobLauncher jobLauncher;
-	@Autowired public JobRepository jobRepository;
-	@Autowired public JobExplorer jobExplorer;
-	@Autowired public JobBuilderFactory jobBuilderFactory;
-    @Autowired public StepBuilderFactory stepBuilderFactory;
-    
-    @Autowired
-    private ApplicationContext applicationContext;
+	@Autowired private JobRegistry jobRegistry;
+	@Autowired private JobLauncher jobLauncher;
+	@Autowired private JobRepository jobRepository;
+	@Autowired private JobExplorer jobExplorer;
+	@Autowired private JobBuilderFactory jobBuilderFactory;
+    @Autowired private StepBuilderFactory stepBuilderFactory;
+    @Autowired private ApplicationContext applicationContext;
   
     /**
      * 
@@ -128,12 +126,12 @@ public class SampleBatchConfiguration extends DefaultBatchConfigurer {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
+	@Bean
 	public JobLauncher getJobLauncher() {
 		SimpleJobLauncher jobLauncher = null;
 		try {
 			jobLauncher = new SimpleJobLauncher();
-			jobLauncher.setJobRepository(jobRepository);
+			jobLauncher.setJobRepository(this.jobRepository);
 			jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
 			jobLauncher.afterPropertiesSet();
 		}
