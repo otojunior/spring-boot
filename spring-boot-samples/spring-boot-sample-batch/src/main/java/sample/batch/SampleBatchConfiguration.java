@@ -18,16 +18,18 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.launch.support.SimpleJobOperator;
 import org.springframework.batch.core.repository.JobRepository;
-import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
+
+import sample.batch.data.Item;
+import sample.batch.item.CustomItemProcessor;
+import sample.batch.item.CustomItemReader;
+import sample.batch.item.CustomItemWriter;
+import sample.batch.item.CustomTasklet;
 
 @Configuration
 @EnableBatchProcessing
@@ -39,7 +41,7 @@ public class SampleBatchConfiguration extends DefaultBatchConfigurer {
 	@Autowired private JobBuilderFactory jobBuilderFactory;
     @Autowired private StepBuilderFactory stepBuilderFactory;
     @Autowired private ApplicationContext applicationContext;
-  
+    
     /**
      * 
      * @return
@@ -92,21 +94,21 @@ public class SampleBatchConfiguration extends DefaultBatchConfigurer {
 
     /**
      * 
-     * @param writer
+     * @param customItemWriter
      * @return
      */
 	@Bean
-	public Step step1(
+	public Step step2(
 			StepExecutionListener listener,
-			ItemReader<String> reader,
-			ItemProcessor<String, String> processor,
-			ItemWriter<String> writer) {
-		return stepBuilderFactory.get("passo1").
+			CustomItemReader customItemReader,
+			CustomItemProcessor customItemProcessor,
+			CustomItemWriter customItemWriter) {
+		return stepBuilderFactory.get("passo2").
 			listener(listener).
-			<String, String>chunk(3).
-			reader(reader).
-			processor(processor).
-			writer(writer).
+			<Item, Item>chunk(3).
+			reader(customItemReader).
+			processor(customItemProcessor).
+			writer(customItemWriter).
 			build();
 	}
 	
@@ -116,10 +118,10 @@ public class SampleBatchConfiguration extends DefaultBatchConfigurer {
      * @return
      */
 	@Bean
-	public Step step2(@Qualifier("tasklet2") Tasklet tasklet) {
+	public Step step1(CustomTasklet customTasklet) {
 		return stepBuilderFactory.
-			get("passo2").
-			tasklet(tasklet).
+			get("passo1").
+			tasklet(customTasklet).
 			build();
 	}
 	

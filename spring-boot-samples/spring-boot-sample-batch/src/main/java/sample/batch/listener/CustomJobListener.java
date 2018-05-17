@@ -24,8 +24,10 @@ public class CustomJobListener implements JobExecutionListener {
 	 */
 	@Override
 	public void afterJob(JobExecution jobExecution) {
-		if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
-			LOG.info(">>>> AFTER JOB CALLBACK");
+		if (LOG.isTraceEnabled()) {
+			if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
+				LOG.trace("CustomJobListener.afterJob() chamado");
+			}
 		}
 	}
 
@@ -34,6 +36,8 @@ public class CustomJobListener implements JobExecutionListener {
 	 */
 	@Override
 	public void beforeJob(JobExecution jobExecution) {
-		LOG.info(">>>> BEFORE JOB CALLBACK");
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("CustomJobListener.beforeJob() chamado");
+		}
 	}
 }

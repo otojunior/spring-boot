@@ -23,7 +23,9 @@ public class CustomStepListener implements StepExecutionListener {
 	 */
 	@Override
 	public void beforeStep(StepExecution stepExecution) {
-		LOG.info(">>> BEFORE STEP CALLBACK - " + stepExecution.getStartTime().toString());
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("CustomStepListener.beforeStep() chamado - " + stepExecution.getStartTime().toString());
+		}
 	}
 
 	/**
@@ -31,7 +33,9 @@ public class CustomStepListener implements StepExecutionListener {
 	 */
 	@Override
 	public ExitStatus afterStep(StepExecution stepExecution) {
-		LOG.info(">>> AFTER STEP CALLBACK ");
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("CustomStepListener.afterStep() chamado");
+		}
 		return ExitStatus.COMPLETED;
 	}
 }

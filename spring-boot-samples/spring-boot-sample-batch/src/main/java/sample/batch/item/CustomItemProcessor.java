@@ -7,20 +7,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 
+import sample.batch.data.Item;
+
 /**
  * @author Oto Soares Coelho Junior (oto.coelho-junior@serpro.gov.br)
  *
  */
-public class CustomItemProcessor implements ItemProcessor<String, String> {
+public class CustomItemProcessor implements ItemProcessor<Item, Item> {
 	private static Logger LOG = LoggerFactory.getLogger(CustomItemProcessor.class);
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String process(String input) throws Exception {
-		String output = input.toUpperCase();
-		LOG.info("process() chamado - input:" + input + " | output:" + output);
+	public Item process(Item input) throws Exception {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(
+				"CustomItemProcessor.process() chamado - "
+				+ "input:" + input.getNome() 
+				+ " | output:" + input.getNome().toUpperCase());
+		}
+		
+		Item output = input;
+		output.setNome(input.getNome().toUpperCase());
+		output.setValido(Boolean.TRUE);
 		return output;
 	}
 }
