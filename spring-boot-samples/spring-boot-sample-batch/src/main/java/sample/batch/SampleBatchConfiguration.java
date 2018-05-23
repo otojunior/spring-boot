@@ -3,7 +3,6 @@ package sample.batch;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -30,6 +29,8 @@ import sample.batch.item.CustomItemProcessor;
 import sample.batch.item.CustomItemReader;
 import sample.batch.item.CustomItemWriter;
 import sample.batch.item.CustomTasklet;
+import sample.batch.listener.CustomJobListener;
+import sample.batch.listener.CustomStepListener;
 
 @Configuration
 @EnableBatchProcessing
@@ -81,7 +82,7 @@ public class SampleBatchConfiguration extends DefaultBatchConfigurer {
      */
     @Bean
     public Job importUserJob(
-    			JobExecutionListener listener,
+    			CustomJobListener listener,
             	@Qualifier("step1") Step stepUm,
             	@Qualifier("step2") Step stepDois) {
         return jobBuilderFactory.get("importUserJob").
@@ -99,7 +100,7 @@ public class SampleBatchConfiguration extends DefaultBatchConfigurer {
      */
 	@Bean
 	public Step step2(
-			StepExecutionListener listener,
+			CustomStepListener listener,
 			CustomItemReader customItemReader,
 			CustomItemProcessor customItemProcessor,
 			CustomItemWriter customItemWriter) {
@@ -118,9 +119,12 @@ public class SampleBatchConfiguration extends DefaultBatchConfigurer {
      * @return
      */
 	@Bean
-	public Step step1(CustomTasklet customTasklet) {
+	public Step step1(
+			CustomStepListener listener,
+			CustomTasklet customTasklet) {
 		return stepBuilderFactory.
 			get("passo1").
+			listener(listener).
 			tasklet(customTasklet).
 			build();
 	}

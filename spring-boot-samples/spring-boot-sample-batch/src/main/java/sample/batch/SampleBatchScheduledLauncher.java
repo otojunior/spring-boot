@@ -23,7 +23,7 @@ public class SampleBatchScheduledLauncher {
 	 * 
 	 * @throws Exception
 	 */
-	@Scheduled(fixedDelay = 30000l)
+	@Scheduled(fixedDelay=10_000) // 1 hora.
 	public void runJob() throws Exception {
 		this.jobOperator.startNextInstance("importUserJob");
 	}

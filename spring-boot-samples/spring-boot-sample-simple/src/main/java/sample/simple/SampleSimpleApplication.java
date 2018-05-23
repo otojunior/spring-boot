@@ -16,33 +16,35 @@
 
 package sample.simple;
 
-import sample.simple.service.HelloWorldService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
+/**
+ * 
+ * @author Oto Soares Coelho Junior (oto.coelho-junior@serpro.gov.br)
+ *
+ */
 @SpringBootApplication
-public class SampleSimpleApplication implements CommandLineRunner {
-
-	// Simple example shows how a command line spring application can execute an
-	// injected bean service. Also demonstrates how you can use @Value to inject
-	// command line args ('--name=whatever') or application properties
-
-	@Autowired
-	private HelloWorldService helloWorldService;
-
-	@Override
-	public void run(String... args) {
-		System.out.println(this.helloWorldService.getHelloMessage());
-		if (args.length > 0 && args[0].equals("exitcode")) {
-			throw new ExitException();
-		}
-	}
-
+@EnableScheduling
+public class SampleSimpleApplication {
+	private static final Logger LOG = LoggerFactory.getLogger(SampleSimpleApplication.class);
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(SampleSimpleApplication.class, args);
 	}
-
+	
+	/**
+	 * 
+	 */
+	@Scheduled(fixedDelay=1)
+	public void log() {
+		LOG.info("teste");
+	}
 }
