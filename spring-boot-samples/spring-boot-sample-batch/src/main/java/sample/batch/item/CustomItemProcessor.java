@@ -26,6 +26,12 @@ public class CustomItemProcessor implements ItemProcessor<Item, Item> {
 				"CustomItemProcessor.process() chamado - "
 				+ "input:" + input.getNome() 
 				+ " | output:" + input.getNome().toUpperCase());
+			
+			/*
+			 * Atraso proposital, simulando um processamento mais pesado
+			 * da funcionalidade.
+			 */
+			Thread.sleep(500);
 		}
 		
 		Item output = input;

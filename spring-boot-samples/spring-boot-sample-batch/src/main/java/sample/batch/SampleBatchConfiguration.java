@@ -105,7 +105,7 @@ public class SampleBatchConfiguration extends DefaultBatchConfigurer {
 			CustomItemWriter customItemWriter) {
 		return stepBuilderFactory.get("passo2").
 			listener(listener).
-			<Item, Item>chunk(3).
+			<Item, Item>chunk(8).
 			reader(customItemReader).
 			processor(customItemProcessor).
 			writer(customItemWriter).
