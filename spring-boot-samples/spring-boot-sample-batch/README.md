@@ -1,5 +1,8 @@
-Função para criação de string aleatória:
-----------------------------------------
+
+select * from batch_job_instance;
+select * from item;
+
+-- *********************************************
 
 CREATE OR REPLACE FUNCTION rndstr_lower(in length INTEGER) returns text AS $$
 	SELECT array_to_string(ARRAY(
@@ -7,9 +10,18 @@ CREATE OR REPLACE FUNCTION rndstr_lower(in length INTEGER) returns text AS $$
 		FROM generate_series(1, length)), '');
 $$ LANGUAGE SQL;
 
+-- *********************************************
 
-Criação de dados na tabela Item:
---------------------------------
+truncate table batch_job_instance cascade;
+truncate table batch_job_execution cascade;
+truncate table batch_job_execution_params cascade;
+truncate table batch_job_execution_context cascade;
+truncate table batch_step_execution cascade;
+truncate table batch_step_execution_context cascade;
+
+truncate table item;
+
+-- **********************************************
 
 insert into item
 select generate_series id,

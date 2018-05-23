@@ -31,7 +31,7 @@ public class CustomItemProcessor implements ItemProcessor<Item, Item> {
 			 * Atraso proposital, simulando um processamento mais pesado
 			 * da funcionalidade.
 			 */
-			Thread.sleep(500);
+			Thread.sleep(1000);
 		}
 		
 		Item output = input;
