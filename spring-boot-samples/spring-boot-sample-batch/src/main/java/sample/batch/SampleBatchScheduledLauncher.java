@@ -5,6 +5,7 @@ package sample.batch;
 
 import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,6 +16,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 @Configuration
 @EnableScheduling
+@ConditionalOnProperty(prefix="sample.batch", name="schedules", havingValue="true", matchIfMissing=false)
 public class SampleBatchScheduledLauncher {
 	@Autowired
 	public JobOperator jobOperator;
@@ -23,7 +25,7 @@ public class SampleBatchScheduledLauncher {
 	 * 
 	 * @throws Exception
 	 */
-	@Scheduled(fixedDelay=10_000) // 1 hora.
+	@Scheduled(fixedDelay=10_000) // 10 segundos.
 	public void runJob() throws Exception {
 		this.jobOperator.startNextInstance("importUserJob");
 	}

@@ -4,6 +4,7 @@
 package sample.batch.item;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import sample.batch.data.Item;
 import sample.batch.data.ItemRepository;
 
 /**
@@ -43,18 +45,17 @@ public class CustomTasklet implements Tasklet {
 			LOG.trace("CustomTasklet.execute()");
 		}
 		
-		Iterator<String> keysIterator = repository.
+		List<String> keysList = repository.
 			findByValido(Boolean.FALSE).
 			stream().
-			map(item -> item.getNome()).
-			collect(Collectors.toList()).
-			iterator();
+			map(Item::getNome).
+			collect(Collectors.toList());
 		
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("keysIterator: " + keysIterator.toString());
+			LOG.debug("keysIterator: " + keysList.size());
 		}
 		
-		reader.setKeysIterator(keysIterator);
+		reader.setKeysIterator(keysList.iterator());
 		return null;
 	}
 }
