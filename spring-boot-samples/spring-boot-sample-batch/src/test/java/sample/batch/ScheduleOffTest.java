@@ -5,6 +5,8 @@ package sample.batch;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -14,17 +16,13 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest({
-	"sample.batch.schedules=true"
+	"sample.batch.schedule.importUserJob=false"
 })
-public class TesteGeral {
+public class ScheduleOffTest {
+	private static final Logger LOG = LoggerFactory.getLogger(ScheduleOffTest.class);
+	
 	@Test
-	public void teste() {
-		try {
-			System.out.println("inicio teste");
-			Thread.sleep(10_000);	// teste demorado
-			System.out.println("fim teste");
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+	public void testScheduleOff() {
+		LOG.debug("Schedule off");
 	}
 }

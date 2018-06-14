@@ -1,13 +1,12 @@
 /**
  * 
  */
-package sample.batch;
+package sample.batch.launcher;
 
 import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 /**
@@ -15,9 +14,8 @@ import org.springframework.scheduling.annotation.Scheduled;
  *
  */
 @Configuration
-@EnableScheduling
-@ConditionalOnProperty(prefix="sample.batch", name="schedules", havingValue="true", matchIfMissing=false)
-public class SampleBatchScheduledLauncher {
+@ConditionalOnProperty(prefix="sample.batch.schedule", name="importUserJob", havingValue="true", matchIfMissing=false)
+public class ImportUserJobLauncher {
 	@Autowired
 	public JobOperator jobOperator;
 	
