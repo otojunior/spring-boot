@@ -3,7 +3,6 @@
  */
 package sample.batch.item;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +51,7 @@ public class CustomTasklet implements Tasklet {
 			collect(Collectors.toList());
 		
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("keysIterator: " + keysList.size());
+			LOG.debug("keysIterator: {}", keysList.size());
 		}
 		
 		reader.setKeysIterator(keysList.iterator());
