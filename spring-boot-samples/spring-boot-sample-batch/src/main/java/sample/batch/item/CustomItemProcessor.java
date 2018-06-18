@@ -22,10 +22,10 @@ public class CustomItemProcessor implements ItemProcessor<Item, Item> {
 	@Override
 	public Item process(Item input) throws Exception {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(
-				"CustomItemProcessor.process() chamado - "
-				+ "input:" + input.getNome() 
-				+ " | output:" + input.getNome().toUpperCase());
+			LOG.debug("CustomItemProcessor.process() chamado - {} input:{} | output:{}",
+				input.getId(),
+				input.getNome(),
+				input.getNome().toUpperCase());
 			
 			/*
 			 * Atraso proposital, simulando um processamento mais pesado
