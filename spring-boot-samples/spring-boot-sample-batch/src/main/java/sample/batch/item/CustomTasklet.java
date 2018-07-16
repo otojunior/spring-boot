@@ -24,7 +24,7 @@ import sample.batch.data.ItemRepository;
 public class CustomTasklet implements Tasklet {
 	private static final Logger LOG = LoggerFactory.getLogger(CustomTasklet.class);
 
-	@Autowired private CustomItemReader reader;
+	@Autowired private GlobalContext context;
 	@Autowired private ItemRepository repository;
 	
 	/**
@@ -54,7 +54,7 @@ public class CustomTasklet implements Tasklet {
 			LOG.debug("keysIterator: {}", keysList.size());
 		}
 		
-		reader.setKeysIterator(keysList.iterator());
-		return null;
+		context.put("importUserJob", keysList.iterator());
+		return RepeatStatus.FINISHED;
 	}
 }

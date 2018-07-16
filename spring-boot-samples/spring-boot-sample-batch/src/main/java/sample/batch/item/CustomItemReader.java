@@ -20,12 +20,13 @@ import sample.batch.data.SimuladorAmazonS3Repository;
  */
 public class CustomItemReader implements ItemReader<Item> {
 	private static final Logger LOG = LoggerFactory.getLogger(CustomItemReader.class);
+
+	@Autowired
+	private GlobalContext context;
 	
 	@Autowired
 	private SimuladorAmazonS3Repository simuladorAmazonS3;
 	
-	private Iterator<String> keysIterator;
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -35,6 +36,7 @@ public class CustomItemReader implements ItemReader<Item> {
 			LOG.trace("CustomItemReader.read() chamado"); 
 		}
 		
+		Iterator<String> keysIterator = context.get("importUserJob");
 		if (keysIterator.hasNext()) {
 			String key = keysIterator.next();
 			Item item = amazonS3get(key);
@@ -42,17 +44,6 @@ public class CustomItemReader implements ItemReader<Item> {
 		} else {
 			return null;
 		}
-	}
-
-	/**
-	 * @param keys the keys to set
-	 */
-	public void setKeysIterator(Iterator<String> keysIterator) {
-		if (LOG.isTraceEnabled()) {
-			LOG.trace("CustomItemReader.setKeysIterator() chamado"); 
-		}
-		
-		this.keysIterator = keysIterator;
 	}
 	
 	/**

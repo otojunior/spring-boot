@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.SyncTaskExecutor;
 
 import sample.batch.data.Item;
 import sample.batch.item.CustomItemProcessor;
@@ -137,7 +137,7 @@ public class SampleBatchConfiguration extends DefaultBatchConfigurer {
 		try {
 			jobLauncher = new SimpleJobLauncher();
 			jobLauncher.setJobRepository(this.jobRepository);
-			jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
+			jobLauncher.setTaskExecutor(new SyncTaskExecutor());
 			jobLauncher.afterPropertiesSet();
 		}
 		catch (Exception e) {
