@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import sample.batch.item.CustomItemProcessor;
 import sample.batch.item.CustomItemReader;
 import sample.batch.item.CustomItemWriter;
-import sample.batch.item.CustomTasklet;
 
 /**
  * @author Oto Soares Coelho Junior (oto.coelho-junior@serpro.gov.br)
@@ -47,14 +46,5 @@ public class CustomItemFactory {
     @Bean
     public CustomItemWriter writer() {
     	return new CustomItemWriter();
-    }
-    
-    /**
-     * 
-     * @return
-     */
-    @Bean
-    public CustomTasklet tasklet() {
-    	return new CustomTasklet();
     }
 }

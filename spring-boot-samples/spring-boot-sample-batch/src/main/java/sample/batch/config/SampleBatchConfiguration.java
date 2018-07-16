@@ -27,7 +27,6 @@ import sample.batch.data.Item;
 import sample.batch.item.CustomItemProcessor;
 import sample.batch.item.CustomItemReader;
 import sample.batch.item.CustomItemWriter;
-import sample.batch.item.CustomTasklet;
 import sample.batch.listener.CustomJobListener;
 import sample.batch.listener.CustomStepListener;
 
@@ -82,13 +81,11 @@ public class SampleBatchConfiguration extends DefaultBatchConfigurer {
     @Bean
     public Job importUserJob(
     			CustomJobListener listener,
-            	@Qualifier("step1") Step stepUm,
-            	@Qualifier("step2") Step stepDois) {
+            	@Qualifier("step1") Step stepUm) {
         return jobBuilderFactory.get("importUserJob").
         	listener(listener).
         	incrementer(new RunIdIncrementer()).
             start(stepUm).
-            next(stepDois).
             build();
     }
 
@@ -98,33 +95,17 @@ public class SampleBatchConfiguration extends DefaultBatchConfigurer {
      * @return
      */
 	@Bean
-	public Step step2(
+	public Step step1(
 			CustomStepListener listener,
 			CustomItemReader customItemReader,
 			CustomItemProcessor customItemProcessor,
 			CustomItemWriter customItemWriter) {
-		return stepBuilderFactory.get("passo2").
+		return stepBuilderFactory.get("passo1").
 			listener(listener).
 			<Item, Item>chunk(8).
 			reader(customItemReader).
 			processor(customItemProcessor).
 			writer(customItemWriter).
-			build();
-	}
-	
-	/**
-     * 
-     * @param writer
-     * @return
-     */
-	@Bean
-	public Step step1(
-			CustomStepListener listener,
-			CustomTasklet customTasklet) {
-		return stepBuilderFactory.
-			get("passo1").
-			listener(listener).
-			tasklet(customTasklet).
 			build();
 	}
 	
