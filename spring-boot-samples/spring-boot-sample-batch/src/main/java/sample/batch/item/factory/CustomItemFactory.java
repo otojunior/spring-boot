@@ -5,9 +5,13 @@ package sample.batch.item.factory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import sample.batch.data.Item;
 import sample.batch.item.CustomItemProcessor;
 import sample.batch.item.CustomItemReader;
 import sample.batch.item.CustomItemWriter;
@@ -26,7 +30,7 @@ public class CustomItemFactory {
      * @return
      */
     @Bean
-    public CustomItemReader reader() {
+    public ItemReader<Item> reader() {
 		return new CustomItemReader();
     }
 
@@ -35,7 +39,7 @@ public class CustomItemFactory {
      * @return
      */
     @Bean
-    public CustomItemProcessor processor() {
+    public ItemProcessor<Item, Item> processor() {
         return new CustomItemProcessor();
     }
 
@@ -44,7 +48,7 @@ public class CustomItemFactory {
      * @return
      */
     @Bean
-    public CustomItemWriter writer() {
+    public ItemWriter<Item> writer() {
     	return new CustomItemWriter();
     }
 }
